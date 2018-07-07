@@ -5,13 +5,22 @@
 <br>
 
 <%= form_for(@post) do |f| %>
-  <label>New Comment: </label>
-  <%= f.text_field :content %>
+    New Comment:
+    <%= f.fields_for :comments do |comment_form| %>
+        <%= comment_form.text_field :content %>
+    <br>
 
+        <%= comment_form.label "User" %>
+        <%= comment_form.collection_select :user_id, User.all, :id, :username %>
+    <br>
+        <%= comment_form.label "New User" %>
+        <%= comment_form.fields_for :users do |user_fields| %>
+            <%= user_fields.text_field :username %>
+        <% end %>
+    <% end %>
+    <br>
   <%= f.submit 'Create Comment' %>
 <% end %>
-
-
 
 <br>
 <h3>Category: <% @post.categories.each do |category| %></h3>
