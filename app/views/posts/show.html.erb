@@ -1,16 +1,27 @@
 <h1><%= @post.title %></h1>
+
+<br>
+<p><%= @post.content %></p>
+<br>
+
+<%= form_for(@post) do |f| %>
+  <label>New Comment: </label>
+  <%= f.text_field :content %>
+
+  <%= f.submit 'Create Comment' %>
+<% end %>
+
+
+
 <br>
 <h3>Category: <% @post.categories.each do |category| %></h3>
     <ul>
         <li><%= category.name %></li>
     </ul>
 <% end %>
-
-<br>
-<p><%= @post.content %></p>
 <br>
 
-<h3>Comments: <% @post.comments.each do |comment| %></h3>
+<h3>Previous Comments: <% @post.comments.each do |comment| %></h3>
     <ul>
         <li><%= comment.content %> -- <%= comment.user.username %></li>
     </ul>
