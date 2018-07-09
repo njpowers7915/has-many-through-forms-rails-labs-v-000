@@ -27,7 +27,7 @@ Leave a comment:
 
 <h3>Previous Comments: <% @post.comments.each do |comment| %></h3>
     <ul>
-        <li><%= comment.content %> -- <% if !comment.user.nil? %><% comment.user.username %><% end %></li>
+        <li><% if !comment.user.nil? %><% comment.user.username %><% end %> says: <%= comment.content %></li>
     </ul>
 <% end %>
 <br>
