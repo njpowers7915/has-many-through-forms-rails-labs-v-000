@@ -5,18 +5,16 @@
 <br>
 
 
-<%= form_for(@post) do |f| %>
-    <h3>New Comment:</h3> <%= f.text_field :content %><input name='post[comment][content]' id='comment_content'>
-    <br>
-    <h3>User: </h3> <datalist id='users_autocomplete'>
-        <% User.all.each do |i| %>
-            <option value='<%=i.username%>'>
-        <% end %>
-    </datalist>
-    <br>
-    <h3>New User: </h3><input name='post[user_attributes][username]' id='comment_user_attributes_username'>
-    <br>
-  <%= f.submit 'Create Comment' %>
+Leave a comment:
+<%= form_for @comment do |f| %>
+  <%= f.hidden_field :post_id, value: @post.id %>
+  Content: <%= f.text_field :content %>
+  User: <%= f.collection_select :user_id, User.all, :id, :username, include_blank: 'Any' %>
+  <%= f.fields_for :user, @comment.user do |user_fields| %>
+    <%= user_fields.text_field :username %>
+    <%= user_fields.text_field :email %>
+  <% end %>
+  <%= f.submit %>
 <% end %>
 
 <br>
