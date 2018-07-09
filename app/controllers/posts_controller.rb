@@ -13,8 +13,6 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.create(post_params)
-    @comment = @post.comments.build
-    @comment.save
     redirect_to @post
   end
 
@@ -24,4 +22,4 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :content, category_ids:[], categories_attributes: [:name], comment_ids:[],
     comments_attributes: [:content, :user_id], user_ids:[], users_attributes: [:username, :email])
   end
-end 
+end
