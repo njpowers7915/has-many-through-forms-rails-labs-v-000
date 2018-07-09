@@ -25,15 +25,15 @@ Leave a comment:
 <% end %>
 <br>
 
-<h3>Previous Comments: <% @post.comments.each do |comment| %></h3>
-    <ul>
-        <li><% if !comment.user.nil? %><% comment.user.username %><% end %> says: <%= comment.content %></li>
-    </ul>
+Comments:
+<% unique_commenters = [] %>
+<% @post.comments.all.each do |c| %>
+    <%= c.user.username %> says: <%= c.content %>
+    <% if unique_commenters.include? c.user %>
+    <% else %>
+      <% unique_commenters << c.user %>
+      <%= link_to c.user.username, user_path(c.user) %>
+    <% end %>
+  <br>
 <% end %>
 <br>
-
-<h3>Users: <% @post.users.uniq.each do |user| %></h3>
-    <ul>
-        <li><%= link_to user.username, user_path(user) %></li>
-    </ul>
-<% end %>
