@@ -4,20 +4,17 @@
 <p><%= @post.content %></p>
 <br>
 
-<%= form_for(@post) do |f| %>
-    New Comment:
-    <%= f.fields_for :comments do |comment_form| %>
-        <%= comment_form.text_field :content %>
-    <br>
 
-        <%= comment_form.label "User" %>
-        <%= comment_form.collection_select :user_id, User.all, :id, :username %>
+<%= form_for(@post) do |f| %>
+    <h3>New Comment:</h3> <%= f.text_field :content %><input name='post[comment][content]' id='comment_content'>
     <br>
-        <%= comment_form.label "New User" %>
-        <%= comment_form.fields_for :users do |user_fields| %>
-            <%= user_fields.text_field :username %>
+    <h3>User: </h3> <datalist id='users_autocomplete'>
+        <% User.all.each do |i| %>
+            <option value='<%=i.username%>'>
         <% end %>
-    <% end %>
+    </datalist>
+    <br>
+    <h3>New User: </h3><input name='post[user_attributes][username]' id='comment_user_attributes_username'>
     <br>
   <%= f.submit 'Create Comment' %>
 <% end %>
@@ -32,7 +29,7 @@
 
 <h3>Previous Comments: <% @post.comments.each do |comment| %></h3>
     <ul>
-        <li><%= comment.content %> -- <%= comment.user.username %></li>
+        <li><%= comment.content %> -- <% if !comment.user.nil? %><% comment.user.username %><% end %></li>
     </ul>
 <% end %>
 <br>
